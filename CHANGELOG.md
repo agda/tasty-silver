@@ -1,6 +1,10 @@
 Changes
 =======
 
+* Drop support for GHC 7.
+
+* Tested with GHC 8.0 - 9.12.2.
+
 Version 3.3.2 (18 Jul 2024)
 -------------
 

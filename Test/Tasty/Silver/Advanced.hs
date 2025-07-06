@@ -17,10 +17,6 @@ module Test.Tasty.Silver.Advanced
   )
 where
 
-#if !(MIN_VERSION_base(4,8,0))
-import Data.Functor ( (<$>) )
-#endif
-
 import Test.Tasty.Providers
 import Test.Tasty.Silver.Internal
 import qualified Data.Text as T

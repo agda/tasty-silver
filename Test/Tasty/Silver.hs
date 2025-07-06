@@ -58,9 +58,6 @@ module Test.Tasty.Silver
   where
 
 import Control.Monad
-#if !(MIN_VERSION_base(4,8,0))
-import Data.Functor ( (<$>) )
-#endif
 import qualified Data.ByteString as BS
 import qualified Data.Set as Set
 import qualified Data.Text as T

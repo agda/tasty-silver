@@ -9,10 +9,6 @@ import Control.Monad          ( unless )
 import Control.Monad.IO.Class ( liftIO )
 
 import Data.List (sort)
-#if !(MIN_VERSION_base(4,8,0))
-import Data.Functor           ( (<$) )
-import Data.Monoid            ( mempty )
-#endif
 
 import System.Directory       ( createDirectory, withCurrentDirectory )
 import System.FilePath

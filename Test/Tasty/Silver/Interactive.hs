@@ -41,9 +41,6 @@ import Control.Monad.State
 import Data.Char
 import Data.Maybe
 import Data.Monoid    ( Any(..) )
-#if !(MIN_VERSION_base(4,8,0))
-import Data.Monoid    ( Monoid(..) )
-#endif
 import Data.Proxy
 #if !(MIN_VERSION_base(4,11,0))
 import Data.Semigroup ( Semigroup(..) )

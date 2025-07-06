@@ -11,9 +11,6 @@ import Control.Exception
 import Control.Monad.Identity
 
 import Data.ByteString as SB
-#if !(MIN_VERSION_base(4,8,0))
-import Data.Functor ( (<$>) )
-#endif
 import Data.Maybe
 import Data.Proxy
 import Data.Typeable (Typeable)
