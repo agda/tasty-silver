@@ -48,16 +48,13 @@ Source-repository head
   location: https://github.com/phile314/tasty-silver.git
 
 library
-  Default-language:
-    Haskell2010
-  Default-extensions:
-    LambdaCase
-  exposed-modules:     Test.Tasty.Silver
-                       Test.Tasty.Silver.Advanced
-                       Test.Tasty.Silver.Filter
-                       Test.Tasty.Silver.Interactive
-                       Test.Tasty.Silver.Interactive.Run
-                       Test.Tasty.Silver.Internal
+  exposed-modules:
+    Test.Tasty.Silver
+    Test.Tasty.Silver.Advanced
+    Test.Tasty.Silver.Filter
+    Test.Tasty.Silver.Interactive
+    Test.Tasty.Silver.Interactive.Run
+    Test.Tasty.Silver.Internal
 
   build-depends:
       base           >= 4.9 && < 5
@@ -85,6 +82,25 @@ library
     , temporary
     , text           >= 0.11.0.0
     , transformers   >= 0.3
+
+  default-language:
+    Haskell2010
+  default-extensions:
+    BangPatterns
+    ExistentialQuantification
+    FlexibleContexts
+    FlexibleInstances
+    GeneralizedNewtypeDeriving
+    LambdaCase
+    MultiParamTypeClasses
+    PatternGuards
+    RankNTypes
+    ScopedTypeVariables
+    TypeSynonymInstances
+  other-extensions:
+    CPP
+    ImplicitParams
+    OverloadedStrings
 
   ghc-options:
     -Wall

@@ -1,5 +1,5 @@
-{-# LANGUAGE TypeSynonymInstances, FlexibleInstances, OverloadedStrings #-}
-{-# LANGUAGE CPP #-}
+{-# LANGUAGE OverloadedStrings #-}
+
 {- |
 This module provides a simplified interface. If you want more, see "Test.Tasty.Silver.Advanced".
 

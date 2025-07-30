@@ -1,5 +1,4 @@
-{-# LANGUAGE RankNTypes, OverloadedStrings #-}
-{-# LANGUAGE CPP #-}
+{-# LANGUAGE OverloadedStrings #-}
 
 module Test.Tasty.Silver.Advanced
   ( -- * Constructing golden tests
