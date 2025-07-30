@@ -1,14 +1,15 @@
-{-# LANGUAGE GeneralizedNewtypeDeriving, PatternGuards, DeriveDataTypeable #-}
+{-# LANGUAGE GeneralizedNewtypeDeriving #-}
+{-# LANGUAGE PatternGuards #-}
 {-# LANGUAGE ExistentialQuantification #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE RankNTypes #-}
+
 module Test.Tasty.Silver.Interactive.Run
   ( wrapRunTest
   )
   where
 
 import Data.Tagged
-import Data.Typeable
 
 import Test.Tasty hiding (defaultMain)
 import Test.Tasty.Options
@@ -17,7 +18,6 @@ import Test.Tasty.Runners
 import Test.Tasty.Silver.Filter ( TestPath )
 
 data CustomTestExec t = IsTest t => CustomTestExec t (OptionSet -> t -> (Progress -> IO ()) -> IO Result)
-  deriving (Typeable)
 
 instance IsTest t => IsTest (CustomTestExec t) where
   run opts (CustomTestExec t r) cb = r opts t cb

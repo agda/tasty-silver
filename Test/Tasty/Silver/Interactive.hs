@@ -1,6 +1,5 @@
 {-# LANGUAGE BangPatterns #-}
 {-# LANGUAGE CPP #-}
-{-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE ExistentialQuantification #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE FlexibleInstances #-}
@@ -96,7 +95,7 @@ defaultMain1 filters =
 -- | Option for interactive mode.
 
 newtype Interactive = Interactive Bool
-  deriving (Eq, Ord, Typeable)
+  deriving (Eq, Ord)
 
 instance IsOption Interactive where
   defaultValue   = Interactive False
@@ -111,7 +110,7 @@ data ResultType = RTSuccess | RTFail | RTIgnore
 data FancyTestException
   = Mismatch GoldenResultI
   | Disabled
-  deriving (Show, Typeable)
+  deriving (Show)
 
 instance Exception FancyTestException
 
@@ -747,7 +746,7 @@ instance Monoid FailureStatus where
 
 -- | Report only failed tests
 newtype HideSuccesses = HideSuccesses Bool
-  deriving (Eq, Ord, Typeable)
+  deriving (Eq, Ord)
 
 instance IsOption HideSuccesses where
   defaultValue   = HideSuccesses False
@@ -757,7 +756,6 @@ instance IsOption HideSuccesses where
   optionCLParser = flagCLParser Nothing (HideSuccesses True)
 
 newtype AnsiTricks = AnsiTricks Bool
-   deriving Typeable
 
 instance IsOption AnsiTricks where
   defaultValue = AnsiTricks True
@@ -771,7 +769,7 @@ instance IsOption AnsiTricks where
 -- | When to use color on the output
 data UseColor
   = Never | Always | Auto
-  deriving (Eq, Ord, Typeable)
+  deriving (Eq, Ord)
 
 -- | Control color output
 instance IsOption UseColor where

@@ -1,5 +1,4 @@
 {-# LANGUAGE CPP #-}
-{-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE ExistentialQuantification #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
@@ -13,7 +12,6 @@ import Control.Monad.Identity
 import Data.ByteString as SB
 import Data.Maybe
 import Data.Proxy
-import Data.Typeable (Typeable)
 import qualified Data.Text as T
 
 import System.IO.Error
@@ -31,14 +29,14 @@ data Golden =
         (a -> a -> IO GDiff)                       -- Compare/diff.
         (a -> IO GShow)                            -- How to produce a show.
         (Maybe (a -> IO ()))                       -- Update golden value.
-  deriving Typeable
 
 
 -- | This option, when set to 'True', specifies that we should run in the
 -- «accept tests» mode.
 
 newtype AcceptTests = AcceptTests Bool
-  deriving (Eq, Ord, Typeable)
+  deriving (Eq, Ord)
+
 instance IsOption AcceptTests where
   defaultValue = AcceptTests False
   parseValue = fmap AcceptTests . safeRead

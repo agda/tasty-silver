@@ -1,6 +1,5 @@
 {-# LANGUAGE BangPatterns #-}
 {-# LANGUAGE CPP #-}
-{-# LANGUAGE DeriveDataTypeable #-}
 {-# LANGUAGE ExistentialQuantification #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
@@ -26,7 +25,6 @@ import Data.Maybe
 import Data.Semigroup ( (<>) )
 #endif
 import Data.Tagged
-import Data.Typeable
 import qualified Data.List as L
 
 import Options.Applicative
@@ -41,20 +39,19 @@ import Test.Tasty.Runners
 -- | Path into the 'TestTree'.  Separator is the slash character(@'/'@).
 type TestPath = String
 
+-- Andreas, 2025-07-30, TODO:  The following comment is without substance,
+-- since all types have Typeable since GHC-7.10:
 -- we have to store the regex as String, as there is no Typeable instance
 -- for the Regex data type with GHC < 7.8
 data RegexFilter
   = RFInclude String -- ^ Include tests that match.
   | RFExclude String -- ^ Exclude tests that match.
-  deriving (Typeable)
 
 -- | Tests to completely exclude, treating them like they do not exist.
 newtype ExcludeFilters = ExcludeFilters [RegexFilter]
-  deriving (Typeable)
 
 -- | Tests to completely include, treating all other tests like they do not exist.
 newtype IncludeFilters = IncludeFilters [RegexFilter]
-  deriving (Typeable)
 
 instance IsOption ExcludeFilters where
   defaultValue = ExcludeFilters []
