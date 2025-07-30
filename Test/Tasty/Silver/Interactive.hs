@@ -29,44 +29,45 @@ module Test.Tasty.Silver.Interactive
 
 import Prelude
 
-import Control.Concurrent.STM.TVar
-import Control.Exception
-import Control.Monad
-import Control.Monad.Identity
-import Control.Monad.Reader
-import Control.Monad.STM
-import Control.Monad.State
+import Control.Concurrent.STM.TVar     ( TVar, readTVar )
+import Control.Exception               ( Exception(fromException, toException), finally )
+import Control.Monad                   ( when, unless )
+import Control.Monad.Identity          ( Identity(Identity) )
+import Control.Monad.IO.Class          ( MonadIO(liftIO) )
+import Control.Monad.Reader            ( Reader, runReader, MonadReader(ask) )
+import Control.Monad.STM               ( atomically, retry )
+import Control.Monad.State             ( MonadState(put, get), evalState, evalStateT, modify )
 
-import Data.Char
-import Data.Maybe
-import Data.Monoid    ( Any(..) )
-import Data.Proxy
+import Data.Char                       ( toLower )
+import Data.Maybe                      ( fromMaybe, isJust )
+import Data.Monoid                     ( Any(..) )
+import Data.Proxy                      ( Proxy(..) )
 #if !(MIN_VERSION_base(4,11,0))
-import Data.Semigroup ( Semigroup(..) )
+import Data.Semigroup                  ( Semigroup(..) )
 #endif
-import Data.Tagged
-import Data.Text      ( Text )
-import Data.Text.Encoding
-import Data.Typeable
-import qualified Data.ByteString as BS
-import qualified Data.IntMap as IntMap
-import qualified Data.Text as T
-import qualified Data.Text.IO as TIO
+import Data.Tagged                     ( untag, Tagged )
+import Data.Text                       ( Text )
+import Data.Text.Encoding              ( encodeUtf8 )
+import Data.Typeable                   ( cast )
+import qualified Data.ByteString       as BS
+import qualified Data.IntMap           as IntMap
+import qualified Data.Text             as T
+import qualified Data.Text.IO          as TIO
 
-import Options.Applicative hiding (Failure, Success)
+import Options.Applicative             ( help, long, option, str, readerError )
 
 import System.Console.ANSI
-import System.Directory
-import System.Exit
-import System.FilePath
+import System.Directory                ( findExecutable )
+import System.Exit                     ( ExitCode(..) )
+import System.FilePath                 ( (<.>) )
 import System.IO
-import System.IO.Silently (silence)
-import System.IO.Temp
-import System.Process
-import System.Process.ByteString as PS
-import qualified System.Process.Text as ProcessText
+import System.IO.Silently              ( silence )
+import System.IO.Temp                  ( withSystemTempFile )
+import System.Process                  ( callCommand, callProcess, rawSystem, shell )
+import System.Process.ByteString as PS ( readCreateProcessWithExitCode )
+import qualified System.Process.Text   as ProcessText
 
-import Text.Printf
+import Text.Printf                     ( printf )
 
 import Test.Tasty hiding (defaultMain)
 import Test.Tasty.Options
@@ -83,7 +84,6 @@ type DisabledTests = TestPath -> Bool
 
 defaultMain :: TestTree -> IO ()
 defaultMain = defaultMain1 []
-
 
 defaultMain1 :: [RegexFilter] -> TestTree -> IO ()
 defaultMain1 filters =

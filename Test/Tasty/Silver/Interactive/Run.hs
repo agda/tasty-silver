@@ -9,12 +9,11 @@ module Test.Tasty.Silver.Interactive.Run
   )
   where
 
-import Data.Tagged
+import Data.Tagged ( retag, Tagged )
 
-import Test.Tasty hiding (defaultMain)
-import Test.Tasty.Options
-import Test.Tasty.Providers
-import Test.Tasty.Runners
+import Test.Tasty.Options       ( OptionDescription, OptionSet )
+import Test.Tasty.Providers     ( IsTest(..), Progress, Result, TestName, TestTree )
+import Test.Tasty.Runners       ( TestTree(..) )
 import Test.Tasty.Silver.Filter ( TestPath )
 
 data CustomTestExec t = IsTest t => CustomTestExec t (OptionSet -> t -> (Progress -> IO ()) -> IO Result)

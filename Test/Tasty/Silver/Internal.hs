@@ -6,15 +6,15 @@
 
 module Test.Tasty.Silver.Internal where
 
-import Control.Exception
-import Control.Monad.Identity
+import Control.Exception ( catchJust )
+import Control.Monad.Identity ( Identity(Identity) )
 
-import Data.ByteString as SB
-import Data.Maybe
-import Data.Proxy
+import Data.ByteString as SB ( readFile, ByteString )
+import Data.Maybe ( fromMaybe )
+import Data.Proxy ( Proxy(..) )
 import qualified Data.Text as T
 
-import System.IO.Error
+import System.IO.Error ( ioeGetErrorType, isDoesNotExistErrorType )
 
 import Test.Tasty.Providers
 import Test.Tasty.Options

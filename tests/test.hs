@@ -2,28 +2,28 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 
-import Control.Concurrent.MVar
-import Control.Exception as E ( catch, SomeException )
+import Control.Concurrent.MVar       ( swapMVar, newMVar, readMVar )
+import Control.Exception        as E ( catch, SomeException )
   -- Prelude of GHC 7.4 also has @catch@, so we disambiguate with E.catch
-import Control.Monad          ( unless )
-import Control.Monad.IO.Class ( liftIO )
+import Control.Monad                 ( unless )
+import Control.Monad.IO.Class        ( liftIO )
 
-import Data.List (sort)
+import Data.List                     ( sort )
 
-import System.Directory       ( createDirectory, withCurrentDirectory )
-import System.FilePath
-import System.IO.Silently     ( capture )
-import System.IO.Temp
+import System.Directory              ( createDirectory, withCurrentDirectory )
+import System.FilePath               ( (</>) )
+import System.IO.Silently            ( capture )
+import System.IO.Temp                ( withSystemTempDirectory )
 
-import Test.Tasty hiding (defaultMain)
-import Test.Tasty.HUnit
-import Test.Tasty.Options
-import Test.Tasty.Runners
-import Test.Tasty.Silver
-import Test.Tasty.Silver.Advanced
-import Test.Tasty.Silver.Filter (checkRF)
-import Test.Tasty.Silver.Interactive
-import Test.Tasty.Silver.Internal
+import Test.Tasty                    ( withResource, testGroup )
+import Test.Tasty.HUnit              ( testCase, (@?=), assertBool, assertFailure )
+import Test.Tasty.Options            ( singleOption )
+import Test.Tasty.Runners            ( TestTree, consoleTestReporter, tryIngredients )
+import Test.Tasty.Silver             ( goldenVsFile, findByExtension )
+import Test.Tasty.Silver.Advanced    ( GShow(ShowText), GDiff(Equal), goldenTest1 )
+import Test.Tasty.Silver.Filter      ( checkRF )
+import Test.Tasty.Silver.Interactive ( defaultMain, runTestsInteractive )
+import Test.Tasty.Silver.Internal    ( AcceptTests(AcceptTests) )
 
 touch :: FilePath -> IO ()
 touch f = writeFile f ""

@@ -20,21 +20,21 @@ module Test.Tasty.Silver.Filter
 
 import Prelude hiding (fail)
 
-import Data.Maybe
+import Data.Maybe ( fromJust, fromMaybe, mapMaybe )
 #if !(MIN_VERSION_base(4,11,0))
 import Data.Semigroup ( (<>) )
 #endif
-import Data.Tagged
+import Data.Tagged ( untag, Tagged )
 import qualified Data.List as L
 
-import Options.Applicative
+import Options.Applicative ( help, long, option, str, readerError, Alternative(some), Parser )
 
 import qualified Text.Regex.TDFA.String as RS
 import qualified Text.Regex.TDFA as R
 
-import Test.Tasty hiding (defaultMain)
-import Test.Tasty.Options
-import Test.Tasty.Runners
+import Test.Tasty         ( TestTree, testGroup )
+import Test.Tasty.Options ( IsOption(..), OptionSet, lookupOption )
+import Test.Tasty.Runners ( TestTree(AskOptions, SingleTest, TestGroup, PlusTestOptions, WithResource) )
 
 -- | Path into the 'TestTree'.  Separator is the slash character(@'/'@).
 type TestPath = String

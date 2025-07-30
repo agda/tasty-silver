@@ -57,16 +57,16 @@ module Test.Tasty.Silver
   )
   where
 
-import Control.Monad
+import Control.Monad ( liftM, forM )
 import qualified Data.ByteString as BS
 import qualified Data.Set as Set
 import qualified Data.Text as T
-import Data.Text.Encoding
+import Data.Text.Encoding ( decodeUtf8, encodeUtf8 )
 
-import System.Directory
-import System.Exit
-import System.FilePath
-import System.Process.Text as PT
+import System.Directory ( doesDirectoryExist, getDirectoryContents )
+import System.Exit ( ExitCode )
+import System.FilePath ( takeExtension )
+import System.Process.Text as PT ( readProcessWithExitCode )
 
 import Test.Tasty.Providers (TestTree, TestName)
 import Test.Tasty.Silver.Advanced
